@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧭 PathQuest
 
-## Getting Started
+PathQuest est un visualiseur interactif d'algorithmes de pathfinding. Il permet de comparer visuellement des algorithmes comme A\*, Dijkstra, BFS et DFS pour trouver le chemin optimal dans un environnement.
 
-First, run the development server:
+## 🎯 Objectifs du projet
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Créer une interface interactive pour visualiser les algorithmes de pathfinding
+- Implémenter progressivement différents algorithmes (BFS, A\*, Dijkstra, DFS)
+- Permettre aux utilisateurs de choisir les points de départ et d'arrivée
+- Offrir une expérience éducative sur le fonctionnement des algorithmes de recherche de chemin
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Technologies utilisées
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next.js (React)
+- TypeScript
+- Tailwind CSS pour le styling
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🗺️ Feuille de route
 
-## Learn More
+1. **MVP (Minimum Viable Product)**
 
-To learn more about Next.js, take a look at the following resources:
+   - [x] Mise en place du projet Next.js
+   - [ ] Création d'une grille simple (ex: 20x20)
+   - [ ] Implémentation de l'algorithme BFS
+   - [ ] Interface utilisateur basique pour choisir les points de départ et d'arrivée
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Fonctionnalités avancées**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+   - [ ] Ajout de l'algorithme A\*
+   - [ ] Visualisation étape par étape du processus de recherche
+   - [ ] Comparaison côte à côte des algorithmes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Améliorations futures**
+   - [ ] Ajout d'obstacles sur la grille
+   - [ ] Implémentation d'algorithmes supplémentaires (Dijkstra, DFS)
+   - [ ] Personnalisation de la taille de la grille
+   - [ ] Mode tutoriel expliquant le fonctionnement de chaque algorithme
