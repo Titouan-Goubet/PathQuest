@@ -20,18 +20,18 @@ PathQuest est un visualiseur interactif d'algorithmes de pathfinding. Il permet 
 1. **MVP (Minimum Viable Product)**
 
    - [x] Mise en place du projet Next.js
-   - [ ] Création d'une grille simple (ex: 20x20)
-   - [ ] Implémentation de l'algorithme BFS
-   - [ ] Interface utilisateur basique pour choisir les points de départ et d'arrivée
+   - [x] Création d'une grille simple (ex: 20x20)
+   - [x] Implémentation de l'algorithme BFS
+   - [x] Interface utilisateur basique pour choisir les points de départ et d'arrivée
 
 2. **Fonctionnalités avancées**
 
    - [ ] Ajout de l'algorithme A\*
-   - [ ] Visualisation étape par étape du processus de recherche
+   - [x] Visualisation étape par étape du processus de recherche
    - [ ] Comparaison côte à côte des algorithmes
 
 3. **Améliorations futures**
-   - [ ] Ajout d'obstacles sur la grille
+   - [x] Ajout d'obstacles sur la grille
    - [ ] Implémentation d'algorithmes supplémentaires (Dijkstra, DFS)
    - [ ] Personnalisation de la taille de la grille
    - [ ] Mode tutoriel expliquant le fonctionnement de chaque algorithme
