@@ -1,3 +1,5 @@
+import React from "react";
+
 interface CellProps {
   isStart: boolean;
   isEnd: boolean;
@@ -7,14 +9,14 @@ interface CellProps {
   onClick: () => void;
 }
 
-const Cell = ({
+const Cell: React.FC<CellProps> = ({
   isStart,
   isEnd,
   isWall,
   isPath,
   isVisited,
   onClick,
-}: CellProps) => {
+}) => {
   let bgColor = "bg-white";
   if (isStart) bgColor = "bg-green-500";
   else if (isEnd) bgColor = "bg-red-500";
@@ -39,14 +41,24 @@ interface GridProps {
   onCellClick: (row: number, col: number) => void;
 }
 
-const Grid = ({
+const Grid: React.FC<GridProps> = ({
   grid,
   startNode,
   endNode,
   path,
   visited,
   onCellClick,
-}: GridProps) => {
+}) => {
+  const isInPath = (row: number, col: number): boolean => {
+    return Array.isArray(path) && path.some(([r, c]) => r === row && c === col);
+  };
+
+  const isVisited = (row: number, col: number): boolean => {
+    return (
+      Array.isArray(visited) && visited.some(([r, c]) => r === row && c === col)
+    );
+  };
+
   return (
     <div
       className="inline-grid gap-0"
@@ -61,10 +73,8 @@ const Grid = ({
             isStart={startNode?.[0] === rowIndex && startNode?.[1] === colIndex}
             isEnd={endNode?.[0] === rowIndex && endNode?.[1] === colIndex}
             isWall={isWall}
-            isPath={path.some(([r, c]) => r === rowIndex && c === colIndex)}
-            isVisited={visited.some(
-              ([r, c]) => r === rowIndex && c === colIndex
-            )}
+            isPath={isInPath(rowIndex, colIndex)}
+            isVisited={isVisited(rowIndex, colIndex)}
             onClick={() => onCellClick(rowIndex, colIndex)}
           />
         ))
