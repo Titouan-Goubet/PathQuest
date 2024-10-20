@@ -2,14 +2,25 @@ interface CellProps {
   isStart: boolean;
   isEnd: boolean;
   isWall: boolean;
+  isPath: boolean;
+  isVisited: boolean;
   onClick: () => void;
 }
 
-const Cell = ({ isStart, isEnd, isWall, onClick }: CellProps) => {
+const Cell = ({
+  isStart,
+  isEnd,
+  isWall,
+  isPath,
+  isVisited,
+  onClick,
+}: CellProps) => {
   let bgColor = "bg-white";
   if (isStart) bgColor = "bg-green-500";
   else if (isEnd) bgColor = "bg-red-500";
   else if (isWall) bgColor = "bg-gray-700";
+  else if (isPath) bgColor = "bg-yellow-300";
+  else if (isVisited) bgColor = "bg-blue-200";
 
   return (
     <div
@@ -23,10 +34,19 @@ interface GridProps {
   grid: boolean[][];
   startNode: [number, number] | null;
   endNode: [number, number] | null;
+  path: [number, number][];
+  visited: [number, number][];
   onCellClick: (row: number, col: number) => void;
 }
 
-const Grid = ({ grid, startNode, endNode, onCellClick }: GridProps) => {
+const Grid = ({
+  grid,
+  startNode,
+  endNode,
+  path,
+  visited,
+  onCellClick,
+}: GridProps) => {
   return (
     <div
       className="inline-grid gap-0"
@@ -41,6 +61,10 @@ const Grid = ({ grid, startNode, endNode, onCellClick }: GridProps) => {
             isStart={startNode?.[0] === rowIndex && startNode?.[1] === colIndex}
             isEnd={endNode?.[0] === rowIndex && endNode?.[1] === colIndex}
             isWall={isWall}
+            isPath={path.some(([r, c]) => r === rowIndex && c === colIndex)}
+            isVisited={visited.some(
+              ([r, c]) => r === rowIndex && c === colIndex
+            )}
             onClick={() => onCellClick(rowIndex, colIndex)}
           />
         ))
