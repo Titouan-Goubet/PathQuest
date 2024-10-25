@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { astar } from "../algorithms/astar";
 import { bfs } from "../algorithms/bfs";
 import Grid from "../components/grid/grid";
 
@@ -8,6 +9,8 @@ const GRID_SIZE = 20;
 const CELLS_PER_FRAME = 300;
 const VISIT_DELAY = 1;
 const PATH_DELAY = 30;
+
+type Algorithm = "BFS" | "A*";
 
 export default function Home() {
   const [grid, setGrid] = useState<boolean[][]>(
@@ -25,6 +28,7 @@ export default function Home() {
   const [isRunning, setIsRunning] = useState(false);
   const [isDrawingPath, setIsDrawingPath] = useState(false);
   const [executionTime, setExecutionTime] = useState<number | null>(null);
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState<Algorithm>("BFS");
 
   useEffect(() => {
     if (isRunning && !isDrawingPath && currentStep < allVisited.length) {
@@ -68,14 +72,19 @@ export default function Home() {
     }
   };
 
-  const runBFS = () => {
+  const runAlgorithm = () => {
     if (startNode && endNode) {
       const startTime = performance.now();
-      const { steps, path } = bfs(grid, startNode, endNode);
+      let result;
+      if (selectedAlgorithm === "BFS") {
+        result = bfs(grid, startNode, endNode);
+      } else {
+        result = astar(grid, startNode, endNode);
+      }
       const endTime = performance.now();
       setExecutionTime(endTime - startTime);
-      setAllVisited(steps.flat());
-      setFullPath(path);
+      setAllVisited(result.steps.flat());
+      setFullPath(result.path);
       setPath([]);
       setVisited([]);
       setCurrentStep(0);
@@ -106,10 +115,20 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center p-24">
       <h1 className="text-4xl font-bold mb-2">PathQuest</h1>
       <p className="text-center mb-6 max-w-md text-sm text-gray-600">
-        Visualisez l&apos;algorithme BFS en action. Cliquez pour définir le
-        départ (vert), l&apos;arrivée (rouge), et les murs (gris). Lancez BFS
-        pour voir le chemin le plus court.
+        Visualisez les algorithmes de pathfinding en action. Cliquez pour
+        définir le départ (vert), l&apos;arrivée (rouge), et les murs (gris).
+        Choisissez un algorithme et lancez-le pour voir le chemin le plus court.
       </p>
+      <div className="mb-4">
+        <select
+          value={selectedAlgorithm}
+          onChange={(e) => setSelectedAlgorithm(e.target.value as Algorithm)}
+          className="px-4 py-2 border rounded"
+        >
+          <option value="BFS">BFS</option>
+          <option value="A*">A*</option>
+        </select>
+      </div>
       <Grid
         grid={grid}
         startNode={startNode}
@@ -121,10 +140,10 @@ export default function Home() {
       <div className="mt-4 space-x-4">
         <button
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={runBFS}
+          onClick={runAlgorithm}
           disabled={isRunning || !startNode || !endNode}
         >
-          Lancer BFS
+          Lancer {selectedAlgorithm}
         </button>
         <button
           className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
