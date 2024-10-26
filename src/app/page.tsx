@@ -1,12 +1,29 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LayoutGrid, Play, RefreshCw } from "lucide-react";
 import { useEffect, useState } from "react";
 import { astar } from "../algorithms/astar";
 import { bfs } from "../algorithms/bfs";
-import { dijkstra } from "../algorithms/djikstra";
+import { dijkstra } from "../algorithms/dijkstra";
 import Grid from "../components/grid/grid";
+import { generateMaze } from "../lib/mazeGenerator";
 
-const GRID_SIZE = 20;
+const GRID_SIZE = 21;
 const CELLS_PER_FRAME = 300;
 const VISIT_DELAY = 1;
 const PATH_DELAY = 30;
@@ -118,56 +135,90 @@ export default function Home() {
     setExecutionTime(null);
   };
 
+  const generateNewMaze = () => {
+    const newMaze = generateMaze(GRID_SIZE, GRID_SIZE);
+    setGrid(newMaze);
+    setStartNode(null);
+    setEndNode(null);
+    setPath([]);
+    setVisited([]);
+    setFullPath([]);
+    setAllVisited([]);
+    setCurrentStep(0);
+    setIsRunning(false);
+    setIsDrawingPath(false);
+    setExecutionTime(null);
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold mb-2">PathQuest</h1>
-      <p className="text-center mb-6 max-w-md text-sm text-gray-600">
-        Visualisez les algorithmes de pathfinding en action. Cliquez pour
-        définir le départ (vert), l&apos;arrivée (rouge), et les murs (gris).
-        Choisissez un algorithme et lancez-le pour voir le chemin le plus court.
-      </p>
-      <div className="mb-4">
-        <select
-          value={selectedAlgorithm}
-          onChange={(e) => setSelectedAlgorithm(e.target.value as Algorithm)}
-          className="px-4 py-2 border rounded"
-        >
-          <option value="BFS">BFS</option>
-          <option value="A*">A*</option>
-          <option value="Dijkstra">Dijkstra</option>
-        </select>
-      </div>
-      <Grid
-        grid={grid}
-        startNode={startNode}
-        endNode={endNode}
-        path={path}
-        visited={visited}
-        onCellClick={handleCellClick}
-      />
-      <div className="mt-4 space-x-4">
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={runAlgorithm}
-          disabled={isRunning || !startNode || !endNode}
-        >
-          Lancer {selectedAlgorithm}
-        </button>
-        <button
-          className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-          onClick={resetGrid}
-        >
-          Réinitialiser la grille
-        </button>
-      </div>
-      {executionTime !== null && (
-        <p className="mt-4">
-          Temps d&apos;exécution : {executionTime.toFixed(2)} ms
-        </p>
-      )}
-      {fullPath.length > 0 && (
-        <p className="mt-2">Longueur du chemin : {fullPath.length} cellules</p>
-      )}
-    </main>
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 to-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+      <Card className="max-w-4xl mx-auto">
+        <CardHeader className="text-center">
+          <CardTitle className="text-4xl font-bold text-primary">
+            PathQuest
+          </CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
+            Visualisez les algorithmes de pathfinding en action
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="mb-6 flex justify-center space-x-4">
+            <Select
+              value={selectedAlgorithm}
+              onValueChange={(value) =>
+                setSelectedAlgorithm(value as Algorithm)
+              }
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sélectionnez un algorithme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="BFS">BFS</SelectItem>
+                <SelectItem value="A*">A*</SelectItem>
+                <SelectItem value="Dijkstra">Dijkstra</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="mb-6 flex justify-center">
+            <Grid
+              grid={grid}
+              startNode={startNode}
+              endNode={endNode}
+              path={path}
+              visited={visited}
+              onCellClick={handleCellClick}
+            />
+          </div>
+          <div className="flex justify-center space-x-4">
+            <Button
+              onClick={runAlgorithm}
+              disabled={isRunning || !startNode || !endNode}
+              variant="default"
+            >
+              <Play className="mr-2 h-4 w-4" />
+              Lancer {selectedAlgorithm}
+            </Button>
+            <Button onClick={resetGrid} variant="destructive">
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Réinitialiser
+            </Button>
+            <Button onClick={generateNewMaze} variant="outline">
+              <LayoutGrid className="mr-2 h-4 w-4" />
+              Générer un labyrinthe
+            </Button>
+          </div>
+          {executionTime !== null && (
+            <p className="mt-4 text-center text-sm text-muted-foreground">
+              Temps d&apos;exécution : {executionTime.toFixed(2)} ms
+            </p>
+          )}
+          {fullPath.length > 0 && (
+            <p className="mt-2 text-center text-sm text-muted-foreground">
+              Longueur du chemin : {fullPath.length} cellules
+            </p>
+          )}
+        </CardContent>
+      </Card>
+    </div>
   );
 }
