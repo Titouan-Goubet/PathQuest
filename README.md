@@ -28,11 +28,14 @@ PathQuest est un visualiseur interactif d'algorithmes de pathfinding. Il permet 
 2. **Fonctionnalités avancées**
 
    - [x] Ajout de l'algorithme A\*
+   - [x] Ajout de l'algorithme Djiskstra
+   - [ ] Ajout de l'algorithme DFS
+   - [ ] Ajout d'explications de chaque algo
    - [x] Visualisation étape par étape du processus de recherche
    - [ ] Comparaison côte à côte des algorithmes
 
 3. **Améliorations futures**
    - [x] Ajout d'obstacles sur la grille
-   - [ ] Implémentation d'algorithmes supplémentaires (Dijkstra, DFS)
    - [ ] Personnalisation de la taille de la grille
-   - [ ] Mode tutoriel expliquant le fonctionnement de chaque algorithme
+   - [ ] Ajout d'une fonctionnalité pour ajouter un labyrinthe
+   - [ ] Ajout d'explications de chaque algo

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { astar } from "../algorithms/astar";
 import { bfs } from "../algorithms/bfs";
+import { dijkstra } from "../algorithms/djikstra";
 import Grid from "../components/grid/grid";
 
 const GRID_SIZE = 20;
@@ -10,7 +11,7 @@ const CELLS_PER_FRAME = 300;
 const VISIT_DELAY = 1;
 const PATH_DELAY = 30;
 
-type Algorithm = "BFS" | "A*";
+type Algorithm = "BFS" | "A*" | "Dijkstra";
 
 export default function Home() {
   const [grid, setGrid] = useState<boolean[][]>(
@@ -76,10 +77,16 @@ export default function Home() {
     if (startNode && endNode) {
       const startTime = performance.now();
       let result;
-      if (selectedAlgorithm === "BFS") {
-        result = bfs(grid, startNode, endNode);
-      } else {
-        result = astar(grid, startNode, endNode);
+      switch (selectedAlgorithm) {
+        case "BFS":
+          result = bfs(grid, startNode, endNode);
+          break;
+        case "A*":
+          result = astar(grid, startNode, endNode);
+          break;
+        case "Dijkstra":
+          result = dijkstra(grid, startNode, endNode);
+          break;
       }
       const endTime = performance.now();
       setExecutionTime(endTime - startTime);
@@ -127,6 +134,7 @@ export default function Home() {
         >
           <option value="BFS">BFS</option>
           <option value="A*">A*</option>
+          <option value="Dijkstra">Dijkstra</option>
         </select>
       </div>
       <Grid
