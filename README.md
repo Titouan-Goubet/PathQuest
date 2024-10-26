@@ -1,6 +1,7 @@
 # 🧭 PathQuest
 
 PathQuest est un visualiseur interactif d'algorithmes de pathfinding. Il permet de comparer visuellement des algorithmes comme A\*, Dijkstra, BFS et DFS pour trouver le chemin optimal dans un environnement.
+[Voir le site](https://path-quest.vercel.app/)
 
 ## 🎯 Objectifs du projet
 
@@ -26,8 +27,8 @@ PathQuest est un visualiseur interactif d'algorithmes de pathfinding. Il permet 
 
 2. **Fonctionnalités avancées**
 
-   - [x] Ajout de l'algorithme A\*
-   - [x] Visualisation étape par étape du processus de recherche
+   - [ ] Ajout de l'algorithme A\*
+   - [ ] Visualisation étape par étape du processus de recherche
    - [ ] Comparaison côte à côte des algorithmes
 
 3. **Améliorations futures**
